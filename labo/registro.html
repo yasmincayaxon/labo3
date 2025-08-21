@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <a href="mision.html">Misison</a>
+        <a href="productos.html">Inicio</a>
+        <a href="index.html">Registro</a>
+    </nav>
+    <div class="container">
+      <form id="formRegistro" action="https://formspree.io/f/xqalrkgo" method="POST">
+          <legend>Formulario</legend>
+
+          <div class="form-grid">
+            <div class="control">
+              <label class="label">Nombre</label>
+              <input type="text" class="input" placeholder="Ingrese su nombre">
+            </div>
+
+            <div class="control">
+              <label class="label">Apellido</label>
+              <input type="text" class="input" placeholder="Ingrese su apellido">
+            </div>
+
+            <div class="control">
+              <label class="label">Dirección</label>
+              <input type="text" class="input" placeholder="Ingrese su dirección">
+            </div>
+
+            <div class="control">
+              <label class="label">Sexo</label>
+              <div class="radio-group">
+                <label><input type="radio" name="sexo" class="radio"> Masculino</label>
+                <label><input type="radio" name="sexo" class="radio"> Femenino</label>
+                <label><input type="radio" name="sexo" class="radio"> Otros</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="control">
+              <label class="label">Fecha de Nacimiento</label>
+              <input type="date" name="fechanacimiento" required onchange="calculateAndShowDiscount()">
+<p id="descuento" class="hidden"></p>
+            </div>
+
+            <div class="control">
+              <label class="label">Otros</label>
+              <textarea class="textarea" placeholder="Información adicional..."></textarea>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+            <button type="reset" class="btn btn-outline">Limpiar</button>
+          </div>
+
+      </form>
+     
+
+    </div>
+   <script>
+function calculateAndShowDiscount() {
+    const fechaNacimientoInput = document.querySelector('input[name="fechanacimiento"]');
+    const discountAmount = document.getElementById('descuento');
+    const discountContainer = document.getElementById('descuento');
+
+    const birthDate = new Date(fechaNacimientoInput.value);
+    const today = new Date();
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+
+    let finalDiscount = 0;
+    if (age < 18) {
+        finalDiscount = 10;
+    } else if (age >= 18 && age < 40) {
+        finalDiscount = 9;
+    } else if (age >= 40 && age <= 50) {
+        finalDiscount = 10;
+    } else if (age > 50) {
+        finalDiscount = 25;
+    }
+
+    discountAmount.textContent = `Descuento aplicado: ${finalDiscount}%`;
+    discountContainer.classList.remove('hidden');
+
+    const subject = "Registro con descuento";
+    const body = `Edad: ${age}\nDescuento aplicado: ${finalDiscount}%`;
+}
+</script>
+</body>
+</html>
